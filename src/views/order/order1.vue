@@ -357,12 +357,5 @@
 </script>
 
 <style>
-	.rightInfos{
-		position: absolute;
-		min-height: 800px;
-		width: calc(100% - 240px);
-		border: 1px solid #0f0;
-		right: 0;
-		top: 79px;
-	}
+
 </style>

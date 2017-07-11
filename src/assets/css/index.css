@@ -1,0 +1,32 @@
+.sideBar{
+	width: 186px;
+	/*height: 325px;*/
+	border: 1px solid #000;
+	top: 80px;
+	left: 20px;
+	position: fixed;
+}
+.sideList{
+	padding-top: 30px;
+}
+.accordion-group{
+	text-align: center;
+}
+.accordion-group a{
+	text-decoration: none;
+}
+.accordion-heading{
+	background: #ccc;
+	border-top: 1px solid #0000FF;
+}
+.accordion-heading>a{
+	color: #fff;
+}
+.content{
+	position: absolute;
+	min-height: 700px;
+	width: calc(100% - 240px);
+	border: 1px solid #0f0;
+	right: 0;
+	top: 79px;
+}

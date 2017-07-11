@@ -7,6 +7,7 @@ import order from '@/components/order'
 import bi1 from '@/views/bi/bi1'
 import bi2 from '@/views/bi/bi2'
 import bi3 from '@/views/bi/bi3'
+import bs1 from '@/views/bs/bs1'
 import order1 from '@/views/order/order1'
 
 Vue.use(Router);
@@ -61,7 +62,14 @@ var router = new Router({//配置路由项，嵌套路由
 			name: 'Bs',
 			component: bs,
 			children: [
-				
+				{
+					path: 'ggzy/sw1',
+					name: 'bs1',
+					components:{
+						default: bs,
+						center: bs1
+					}
+				}
 			]
 		},
 		{

@@ -64,7 +64,7 @@ export default {
   padding: 0;
 }
 #app{
-  height: 2000px;
+  height: 700px;
 }
 .nav{
   width: 100%;

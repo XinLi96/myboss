@@ -1,42 +1,46 @@
 <template>
-	 <div class="container body-content ls">  
-        
-        <div id="test" class="form-group">  
-            <div class="form-group">  
-                <div class="page-header">  
-                    后台管理数据  
-                </div>  
-                <form action="" class="form-inline" style="margin-bottom: 30px;">
-                	<div class="form-group">
-                		<input type="text" placeholder="姓名" class="form-control" v-model="searchName">
-                		<button class="btn btn-primary">搜索</button>
-                	</div>
-                	<div class="form-group">
-                		<button class="btn btn-danger" @click="resetData()">重置</button>
-                	</div>
-                	<div class="form-group">
-			            <button type="button" class="btn btn-primary" data-toggle="modal"  @click="showModal()">
-			              新增
-			            </button>
-		          	</div>
-                </form>
-                <table class="table table-striped">  
-                    <tr>  
-                        <th>姓名</th>  
-                        <th>年龄</th>  
-                        <th>删除信息</th>  
-                    </tr>  
-                    <tr v-for="(item,index) in arrayData">  
-                        <td class="text-center">{{item.name}}</td>  
-                        <td>{{item.age}}</td>  
-                        <td>
-                        	<a href="javascript:void(0)" v-on:click="deleteItem($index,item.age)">
-                        	<button class="btn btn-primary btn-sm" @click="showModalDel(index,item.age)" data-toggle="modal">删除</button>
-                       		</a>
-                 	    </td>  
-                    </tr>  
-                </table>  
-                <div class="pager" id="pager">
+  <div class="container body-content">
+    <div id="test" class="form-group" style="position: absolute;left: 200px;">
+      <div class="form-group" style="text-align:center;">
+          <div class="page-header">
+            后台表格数据
+          </div>
+        <form class="form-inline" style="margin-bottom: 30px;">
+          <div class="form-group">
+            <input type="text" placeholder="姓名" class="form-control" v-model="searchName"/>
+            <button type="button" class="btn btn-primary">搜索</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-danger" @click="resetData()">重置</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" data-toggle="modal"  @click="showModal()">
+              新增
+            </button>
+          </div>
+
+        </form>
+        <table class="table table-bordered table-responsive table-striped table-hover">
+          <thead>
+          <tr class="text-center">
+            <th class="text-center">姓名</th>
+            <th class="text-center">年龄</th>
+            <th class="text-center">删除信息</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item,index) in filterArrayData">
+            <td class="text-center">{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>
+              <a href="javascript:void(0)">
+                   <button class="btn btn-primary btn-sm" @click="showModalDel(index,item.age)" data-toggle="modal">删除</button>
+               </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="pager" id="pager">
           <!--开头的页码-->
           <span class="form-inline">
               <select class="form-control" v-model="pagesize" @change="showPage(pageCurrent,$event,true)" number>
@@ -88,59 +92,58 @@
                </span>
           <span>{{pageCurrent}}/{{pageCount}}</span>
           </div>
-            </div>  
-        </div>  
+      </div>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">新增菜单</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group text-left">
+                <label for="recipient-name" class="control-label">姓名:</label>
+                <input type="text" class="form-control" id="recipient-name"  v-model="addName">
+              </div>
+              <div class="form-group text-left">
+                <label for="recipient-age" class="control-label" >年龄:</label>
+                <input type="text" class="form-control" id="recipient-age" v-model="addAge">
+              </div>
 
-           <!-- Add Modal -->
-	    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	      <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	            <h4 class="modal-title" id="myModalLabel">新增菜单</h4>
-	          </div>
-	          <div class="modal-body">
-	            <form>
-	              <div class="form-group text-left">
-	                <label for="recipient-name" class="control-label">姓名:</label>
-	                <input type="text" class="form-control" id="recipient-name"  v-model="addName">
-	              </div>
-	              <div class="form-group text-left">
-	                <label for="recipient-age" class="control-label" >年龄:</label>
-	                <input type="text" class="form-control" id="recipient-age" v-model="addAge">
-	              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" @click="saveAddData()">保存</button>
+          </div>
+          </div>
+        </div>
+      </div>
 
-	            </form>
-	          </div>
-	          <div class="modal-footer">
-	            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	            <button type="button" class="btn btn-primary" @click="saveAddData()">保存</button>
-	          </div>
-	          </div>
-	        </div>
-	      </div>
+    <!--Delete Modal-->
+    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+            <h4 class="modal-title">确认删除么?</h4>
+          </div>
+          <div class="modal-body text-right">
+            <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
+            <button data-dismiss="modal" class="btn btn-danger btn-sm" @click="deleteMsg(nowIndex)">确认</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+   </div>
 
-	    <!--Delete Modal-->
-	    <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
-	      <div class="modal-dialog">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	            <button type="button" class="close" data-dismiss="modal">
-	              <span>&times;</span>
-	            </button>
-	            <h4 class="modal-title">确认删除么?</h4>
-	          </div>
-	          <div class="modal-body text-right">
-	            <button data-dismiss="modal" class="btn btn-primary btn-sm">取消</button>
-	            <button data-dismiss="modal" class="btn btn-danger btn-sm" @click="deleteMsg(nowIndex)">确认</button>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-
-	    </div>
 </template>
-
 <script>
 	var arrayData=[
     {
@@ -194,7 +197,7 @@
     }
   ];
   export default{
-  	data: function(){
+  	data: function () {
   		return {
 			//总项目数  
 			totalCount: 200,  
@@ -229,7 +232,7 @@
 	      filterArrayData: function () {
 	        var self = this;
 	        return self.arrayData.filter(function (item) {
-	          return item.name.indexOf(self.searchName) == -1
+	          return item.name.indexOf(self.searchName) !== -1
 	        })
 	      }
 	    },
@@ -354,10 +357,12 @@
 </script>
 
 <style>
-	.ls{
-		/*position: absolute;*/
-		/*margin-left: 100px;*/
-		/*width: calc(100% - 240px);*/
-		/*text-align: center;*/
+	.rightInfos{
+		position: absolute;
+		min-height: 800px;
+		width: calc(100% - 240px);
+		border: 1px solid #0f0;
+		right: 0;
+		top: 79px;
 	}
 </style>

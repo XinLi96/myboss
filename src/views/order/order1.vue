@@ -1,9 +1,9 @@
 <template>
   <div class="container body-content">
-    <div id="test" class="form-group" style="position: absolute;left: 200px;">
+    <div id="test" class="form-group more">
       <div class="form-group" style="text-align:center;">
           <div class="page-header">
-            后台表格数据
+            <h2>后台表格数据</h2>
           </div>
         <form class="form-inline" style="margin-bottom: 30px;">
           <div class="form-group">
@@ -33,8 +33,11 @@
             <td class="text-center">{{item.name}}</td>
             <td>{{item.age}}</td>
             <td>
+               <a href="javascript:void(0)">
+                   <button class="btn btn-primary btn-sm" @click="showModalEdit(item.name,item.age,index)" data-toggle="modal">编辑</button>
+               </a>
               <a href="javascript:void(0)">
-                   <button class="btn btn-primary btn-sm" @click="showModalDel(index,item.age)" data-toggle="modal">删除</button>
+                   <button class="btn btn-danger btn-sm" @click="showModalDel(index,item.age)" data-toggle="modal">删除</button>
                </a>
             </td>
           </tr>
@@ -140,6 +143,34 @@
         </div>
       </div>
     </div>
+    <!--  Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">修改菜单</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group text-left">
+                <label for="recipient-name" class="control-label">姓名:</label>
+                <input type="text" class="form-control" id="recipient-name"  v-model="edName" value="edName">
+              </div>
+              <div class="form-group text-left">
+                <label for="recipient-age" class="control-label" >年龄:</label>
+                <input type="text" class="form-control" id="recipient-age" v-model="edAge" value="edAge">
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" @click="editInfo()">修改</button>
+          </div>
+          </div>
+        </div>
+    </div>
     </div>
    </div>
 
@@ -216,16 +247,21 @@
 			//分页数据  
 			arrayData: [], 
 			
-			 //搜索的项
-	        searchName:"",
-	        searchAge:"",
+  	  //搜索的项
+      searchName:"",
+      searchAge:"",
 
-	        //新增用户信息
-	        addName:"",
-	        addAge:"",
+      //新增用户信息
+      addName:"",
+      addAge:"",
 
-	        // 删除用户记录索引
-	        nowIndex:-100
+      //修改用户信息
+      edName: "11",
+      edAge: "",
+      edIndex: -1,
+
+      // 删除用户记录索引
+      nowIndex:-100
 			}
 		},
 		computed: {//计算属性
@@ -248,7 +284,7 @@
 	    methods: {
 	    	showModalDel: function(index){
 	    		$('#layer').modal('show');
-	    		this,nowIndex = index;
+	    		this.nowIndex = index;
 	    	},
 	    	deleteMsg: function(index){
 	    		this.arrayData.splice(index,1);
@@ -268,6 +304,17 @@
 	    		}
 	    		$('#myModal').modal('hide');
 	    	},
+        showModalEdit: function(name,age,index){
+          this.edName = name;
+          this.edAge = age;  
+          this.edIndex = index;        
+          $('#editModal').modal('show');
+        },
+        editInfo: function(){
+          this.arrayData[this.edIndex].name = this.edName;
+          this.arrayData[this.edIndex].age = this.edAge;
+          $('#editModal').modal('hide');
+        },
 	    	resetData: function(){
 	    		this.searchName="";
 	    	},
@@ -365,4 +412,12 @@
 		right: 0;
 		top: 79px;
 	}
+  .more{
+    width: 100%;
+   /* position: absolute;
+    left: 200px;*/
+  }
+  .modal-open {
+    overflow: initial !important;
+  }
 </style>

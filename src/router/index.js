@@ -9,6 +9,7 @@ import bi2 from '@/views/bi/bi2'
 import bi3 from '@/views/bi/bi3'
 import bs1 from '@/views/bs/bs1'
 import order1 from '@/views/order/order1'
+import order2 from '@/views/order/order2'
 
 Vue.use(Router);
 
@@ -84,7 +85,16 @@ var router = new Router({//配置路由项，嵌套路由
 						default: order,
 						center: order1
 					}
+				},
+				{
+					path: '/order/ddgl/order2',
+					name: 'order2',
+					components: {
+						default: order,
+						center: order2
+					}
 				}
+
 			]
 		}
 	]

@@ -8,8 +8,10 @@ import bi1 from '@/views/bi/bi1'
 import bi2 from '@/views/bi/bi2'
 import bi3 from '@/views/bi/bi3'
 import bs1 from '@/views/bs/bs1'
+import bs2 from '@/views/bs/bs2'
 import order1 from '@/views/order/order1'
 import order2 from '@/views/order/order2'
+import order3 from '@/views/order/order3'
 
 Vue.use(Router);
 
@@ -43,7 +45,7 @@ var router = new Router({//配置路由项，嵌套路由
 					}
 				},
 				{
-					path: '/bi/tj/bi2',
+					path: 'tj/bi2',
 					components: {
 						default: bi,
 						center: bi2
@@ -70,6 +72,14 @@ var router = new Router({//配置路由项，嵌套路由
 						default: bs,
 						center: bs1
 					}
+				},
+				{
+					path: 'ggzy/sw2',
+					name: 'bs2',
+					components:{
+						default: bs,
+						center: bs2
+					}
 				}
 			]
 		},
@@ -92,6 +102,14 @@ var router = new Router({//配置路由项，嵌套路由
 					components: {
 						default: order,
 						center: order2
+					}
+				},
+				{
+					path: '/order/ddgl/order3',
+					name: 'order3',
+					components: {
+						default: order,
+						center: order3
 					}
 				}
 

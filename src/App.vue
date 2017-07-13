@@ -44,6 +44,10 @@
         <li>
           <a href=""><span>呼叫中心</span></a>
         </li>
+        <li>
+          <a href="">XXX</a>
+          <a href="">注销</a>
+        </li>
       </ul>
     </nav>
     <div id="con">
@@ -75,7 +79,7 @@ export default {
 .nav-menu{
   list-style: none;
   display: inline-block;
-  width: 922px;
+  /*width: 922px;*/
   height: 50px;
   margin-top: 8px;
 }

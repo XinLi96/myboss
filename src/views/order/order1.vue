@@ -395,7 +395,7 @@
 	              this.showPageEnd = Number(pageIndex) + (Number(this.showPages) - 3) / 2;//将输入的值强制转成数字
 	            }
 	          }
-	          console.log("showPagesStart:" + this.showPagesStart + ",showPageEnd:" + this.showPageEnd + ",pageIndex:" + pageIndex);
+	          // console.log("showPagesStart:" + this.showPagesStart + ",showPageEnd:" + this.showPageEnd + ",pageIndex:" + pageIndex);
 	        }
 	      }
 

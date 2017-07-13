@@ -65,4 +65,7 @@
   .layout-form .form-group.error .control-label {color: #f66;}
   .layout-form .form-group.error input[type=password].form-control, .layout-form .form-group.error input[type=password].form-control:focus, .layout-form .form-group.error input[type=text].form-control, .layout-form .form-group.error input[type=text].form-control:focus {border-color: #f66;  }
   .inline-block{display: inline-block!important;width: auto}
+  .message{
+  	color: red;
+  }
 </style>

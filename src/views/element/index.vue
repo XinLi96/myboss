@@ -1,6 +1,6 @@
 <template>
     <div class="content">
-        <headerd AddBtnName="创建线索" BatchBtnName="批量分配" :IsData="true" :IsAddBtns="true" :IsBatchBtns="true" :AddBtn="AddBtns" :BatchBtn="BatchBtns"></headerd>
+        <headerd :IsAddBtns="false" :IsBatchBtns="false"></headerd>
         <div class="filters">
 
             <el-form :model="ruleForm" class="ruleForm">
@@ -12,7 +12,7 @@
                 </el-form-item>
                 <el-form-item label="状态" class="clearfix">
                     <el-select v-model="ruleForm.status" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                        <el-option v-for="item in ruleForm.options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -21,7 +21,11 @@
             </el-form>
         </div>
         <el-table :data="BusinessData" border style="width: 100%">
-            <el-table-column fixed prop="date" label="商机单号" width="150"></el-table-column>
+            <el-table-column fixed prop="date" label="商机单号" width="150">
+                <template scope="scope">
+                    <router-link :to="{ name: 'businessView', params: { id: 123 }}">{{scope.row.date}}</router-link>
+                </template>
+            </el-table-column>
             <el-table-column prop="name" label="客户名称" width="200"></el-table-column>
             <el-table-column prop="province" label="联系人" width="120"></el-table-column>
             <el-table-column prop="city" label="手机" width="120"></el-table-column>
@@ -33,16 +37,15 @@
             <el-table-column prop="zip" label="状态" width="120"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template scope="scope">
-                    <el-button @click="handleClick" type="text" size="small">线索</el-button>
-                    <el-button type="text" @click="dialogTableVisible = true" size="small">回访</el-button>
+                    <el-button @click="handleClick(scope.row.businessid)" type="text" size="small">线索</el-button>
+                    <el-button type="text"  @click="dialogTableVisible = true" size="small">回访</el-button>
                 </template>
             </el-table-column>
         </el-table>
-
         <el-pagination class="fr" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="total, sizes, prev, pager, next" :total="totalPage"></el-pagination>
 
         <!--回访 弹出层开始-->
-        <el-dialog title="客户回访" :visible.sync="dialogTableVisible"  :size="large">
+        <el-dialog title="客户回访" :visible.sync="dialogTableVisible"  size="small">
             <div class="head-row"></div>
             <div style="height: 488px;overflow: auto">
                 <div class="basicInfo">
@@ -108,46 +111,27 @@
                 </div>
                 <div class="back-visit">
                     <div class="head">回访</div>
-                    <!--<div class="row1">内容：</div>-->
-                    <div class="row1">
-                        <el-form :label-position="labelPosition" ref="form"  label-width="80px" :model="formLabelAlign">
-                            <el-form-item label="内容：">
-                                <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                            v-for="item in options1"
-                                            :key="item.value"
-                                            :label="item.label"
-                                            :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                           <el-form-item label="其他：">
-                                <div class="row">
-                                    <el-input
-                                            type="textarea"
-                                            :rows="4"
-                                            placeholder="请输入内容"
-                                            v-model="textarea">
-                                    </el-input>
-                                </div>
-                            </el-form-item>
-                            <div style="text-align: center;margin-top: 20px">
-                                <el-button type="primary" size="large">确定</el-button>
-                                <el-button size="large">取消</el-button>
-                            </div>
-                        </el-form>
-
-                    </div>
-                    <!--<div class="row1">其他：</div>-->
-                    <!--<div class="row">-->
-                        <!--<el-input-->
-                                <!--type="textarea"-->
-                                <!--:rows="4"-->
-                                <!--placeholder="请输入内容"-->
-                                <!--v-model="textarea">-->
-                        <!--</el-input>-->
-                    <!--</div>-->
-
+                    <el-form ref="form" label-width="80px">
+                        <el-form-item label="内容：">
+                            <el-select v-model="select" @click="getHeight" id="select">
+                                <el-option label="客户有购买意愿，但客户预算较低" value="客户有购买意愿，但客户预算较低"></el-option>
+                                <el-option label="客户有购买意愿，但负面信息原因，客户有顾虑" value="客户有购买意愿，但负面信息原因，客户有顾虑"></el-option>
+                                <el-option label="客户有购买意愿，但产品功能无法满足客户" value="客户有购买意愿，但产品功能无法满足客户"></el-option>
+                                <el-option label="客户有购买意愿，但客户已同其他公司合作" value="客户有购买意愿，但客户已同其他公司合作"></el-option>
+                                <el-option label="无购买意愿，竞争对手假冒客户" value="无购买意愿，竞争对手假冒客户"></el-option>
+                                <el-option label="无购买意愿，客户没有采购计划" value="无购买意愿，客户没有采购计划"></el-option>
+                                <el-option label="联系方式错误，无法联系客户" value="联系方式错误，无法联系客户"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="其他：">
+                            <el-input type="textarea" :rows="5" placeholder="请输入内容">
+                            </el-input>
+                        </el-form-item>
+                        <div class="row" style="text-align: center">
+                            <el-button type="primary" size="large">确定</el-button>
+                            <el-button size="large">取消</el-button>
+                        </div>
+                    </el-form>
                 </div>
             </div>
 
@@ -161,13 +145,18 @@ import headerd from '@v/components/titleBar';
 export default {
     data() {
         return {
-            options1: [
-                {value: '客户有购买意愿，但客户预算较低',label: '客户有购买意愿，但客户预算较低'}, {value: '客户有购买意愿，但负面信息原因，客户有顾虑',label: '客户有购买意愿，但负面信息原因，客户有顾虑'},{value: '客户有购买意愿，但产品功能无法满足客户',label: '客户有购买意愿，但产品功能无法满足客户'},
+            select:'',
+            backValue:'',
+            othertextarea:"",
+            dialogTableVisible: false,
+            options3: [
+                {value: '选项1',label: '黄金糕1'}, {value: '选项2',label: '黄金糕2'},{value: '选项3',label: '黄金糕3'},
             ],
             ruleForm: {
                 startTime: '',
                 endTime: '',
-                status: ''
+                status: '',
+                options:[ {value: '选项1',label: '黄金糕1'}, {value: '选项2',label: '黄金糕2'}]
             },
             textarea: '',
             status: '',
@@ -176,6 +165,7 @@ export default {
             pageSize:20,
             dialogTableVisible: false,
             BusinessData: [{
+                businessid:'123456',
                 date: '2016-05-03',
                 name: '王小虎',
                 province: '上海',
@@ -183,6 +173,7 @@ export default {
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
                 }, {
+                businessid:'123456',
                 date: '2016-05-02',
                 name: '王小虎',
                 province: '上海',
@@ -190,6 +181,7 @@ export default {
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
                 }, {
+                businessid:'123456',
                 date: '2016-05-04',
                 name: '王小虎',
                 province: '上海',
@@ -197,6 +189,7 @@ export default {
                 address: '上海市普陀区金沙江路 1518 弄',
                 zip: 200333
                 }, {
+                businessid:'123456',
                 date: '2016-05-01',
                 name: '王小虎',
                 province: '上海',
@@ -209,6 +202,11 @@ export default {
     components:{
        headerd
     },
+    mounted(){
+        var Select = document.getElementById('select');
+        console.log(Select);
+        console.log(1231232);
+    },
     props: ['headerd'],
     methods: {
         AddBtns() {
@@ -216,8 +214,8 @@ export default {
         },
         BatchBtns() {
         },
-        handleClick(){
-
+        handleClick(id){
+        this.$router.push({name:'businessOrigin',params:{id:id}})
         },
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
@@ -227,16 +225,19 @@ export default {
         },
         query(){
 
+        },
+        getHeight(){
+            this.dialogTableVisible = true;
+            var Select = document.getElementById('select');
+            console.log(Select);
         }
     },
 }
 </script>
 <style scoped>
-    /*.back-dialog{*/
-        /*width: 1048px;*/
-        /*height:  614px;*/
-    /*}*/
-
+    .content{
+        min-height: 800px;
+    }
     .head-row{
         width: 100%;
         height: 1px;

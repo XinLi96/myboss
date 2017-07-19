@@ -4,8 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import iView from 'iview';
-import 'iview/dist/styles/iview.css';
 import $ from '@/assets/lib/jquery.min.js'
+import 'iview/dist/styles/iview.css';
 import '@/assets/css/bootstrap.min.css'
 import '@/assets/css/app.css'
 import '@/assets/lib/bootstrap.min.js'
@@ -20,3 +20,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+

@@ -15,6 +15,7 @@
             v-on:on-ok="editSucc()">
             <Form :label-width="50">
               <Form-item v-for="(value, key) in dataEdit" :key="dataEdit.id">
+                <label for="" v-model="key"></label>
                 <Input v-model="dataEdit[key]" :placeholder="'Please enter' + key"></Input>
               </Form-item>
             </Form> 

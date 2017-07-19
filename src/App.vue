@@ -44,9 +44,15 @@
         <li>
           <a href=""><span>呼叫中心</span></a>
         </li>
-        <li>
+        <li @mouseover="infoShow" @mouseout="infoHide">
           <a href="">XXX</a>
-          <a href="">注销</a>
+          <div class="hideShow" id="show">
+            <ul>
+              <li class="infoFirst">个人设置</li>
+              <li>消息通知</li>
+              <li>退出登录</li>
+            </ul>
+          </div>
         </li>
       </ul>
     </nav>
@@ -57,8 +63,24 @@
 </template>
 
 <script>
-export default {
-  name: 'app'
+    var HideShow = document.getElementsByClassName('hideShow');
+    var $Hs = $('#show');
+    export default {
+     name: 'app',
+    methods: {
+    infoShow(){
+        $('#show').fadeIn(100);
+//        HideShow[0].style.display = 'block';
+        console.log($Hs);
+    },
+    infoHide(){
+         $('#show').fadeOut(100,function(){
+            console.log('sads');
+        });
+//        HideShow[0].style.display = 'none';
+        console.log('4546');
+    }
+  }
 }
 </script>
 
@@ -83,7 +105,7 @@ export default {
   height: 50px;
   margin-top: 8px;
 }
-.nav-menu li{
+.nav-menu>li{
   display: inline-block;
   width: 71px;
   height: 50px;
@@ -91,7 +113,7 @@ export default {
   text-align: center;
   margin-right: 10px;
 }
-.nav-menu li:hover{
+.nav-menu>li:hover{
   background: #ccc;
 }
 .nav-menu li a{
@@ -99,4 +121,20 @@ export default {
   color: #fff;
   line-height: 50px;
 }
+  .hideShow{
+      background-color: #00d6b2;
+      color: #ffffff;
+      display: none;
+      /*visibility: hidden;*/
+  }
+  .hideShow li{
+    display: inline-block;
+    height: 35px;
+    /*margin-top: 10px;*/
+
+  }
+  .infoFirst{
+    margin-top: 20px;
+  }
+
 </style>

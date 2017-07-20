@@ -44,7 +44,7 @@
         <li>
           <a href=""><span>呼叫中心</span></a>
         </li>
-        <li @mouseover="infoShow" @mouseout="infoHide">
+        <li @mouseenter.prevent="infoShow" @mouseleave.prevent="infoHide">
           <a href="">XXX</a>
           <div class="hideShow" id="show">
             <ul>
@@ -68,16 +68,14 @@
     export default {
      name: 'app',
     methods: {
-    infoShow(){
-        $('#show').fadeIn(100);
-//        HideShow[0].style.display = 'block';
-        console.log($Hs);
+    infoShow(e){
+        $("#show").slideDown(500);
+//        return false;
+
     },
     infoHide(){
-         $('#show').fadeOut(100,function(){
-            console.log('sads');
-        });
-//        HideShow[0].style.display = 'none';
+        $("#show").slideUp(500);
+//        return false;
         console.log('4546');
     }
   }

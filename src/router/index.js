@@ -7,6 +7,7 @@ import order from '@/components/order'
 import bi1 from '@/views/bi/bi1'
 import bi2 from '@/views/bi/bi2'
 import bi3 from '@/views/bi/bi3'
+import bi4 from '@/views/bi/bi4'
 import bs1 from '@/views/bs/bs1'
 import bs2 from '@/views/bs/bs2'
 import order1 from '@/views/order/order1'
@@ -56,6 +57,13 @@ var router = new Router({//配置路由项，嵌套路由
 					components: {
 						default: bi,
 						center: bi3
+					}
+				},
+				{
+					path: '/bi/xt/bi4',
+					components: {
+						default: bi,
+						center: bi4
 					}
 				}
 			]

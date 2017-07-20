@@ -1,7 +1,7 @@
 <template>
 	<div class="content">
         <h1>计算器</h1>
-        <ul>
+        <ul class="ww">
             <li v-for="item in items" @click="toggleActive(item)" :class="{'active':item.active}">{{item.name}}<span>{{item.price | currency}}</span></li>
         </ul>
         <p>Total:<span>{{total() | currency}}</span></p>
@@ -51,5 +51,11 @@
 	}
 </script>
 <style>
-
+    .ww li{
+        cursor: pointer;
+        background-color: #00d6b2;
+    }
+    .ww .active{
+        background-color: #3a33d1;
+    }
 </style>
